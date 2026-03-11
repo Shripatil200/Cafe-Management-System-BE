@@ -10,13 +10,13 @@ import java.util.Map;
 @RequestMapping(path="/password")
 public interface PasswordRest {
 
-    @PostMapping(path="/change")
+    @PostMapping(path="/changePassword")
     ResponseEntity<String> changePassword(@RequestBody Map<String, String> requestMap);
 
-    @PostMapping(path="/forgot")
+    @PostMapping(path="/forgotPassword")
     ResponseEntity<String> forgotPassword(@RequestBody Map<String, String> requestMap);
 
-    @PostMapping(path="/reset")
+    @PostMapping(path="/resetPassword")
     ResponseEntity<String> resetPassword(@RequestBody Map<String, String> requestMap);
 
 }

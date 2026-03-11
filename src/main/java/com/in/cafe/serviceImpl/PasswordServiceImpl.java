@@ -12,6 +12,7 @@ import com.in.cafe.dao.UserDao;
 import com.in.cafe.service.PasswordService;
 import com.in.cafe.utils.CafeUtils;
 import com.in.cafe.utils.EmailUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
+
+@Slf4j
 @Service
 public class PasswordServiceImpl implements PasswordService {
 
@@ -56,7 +59,9 @@ public class PasswordServiceImpl implements PasswordService {
     @Override
     public ResponseEntity<String> changePassword(Map<String, String> requestMap) {
         try {
+            System.out.println(".....................................................................");
             User userObj = userDao.findByEmail(jwtFilter.getCurrentUser());
+            System.out.println(userObj);
             if (userObj != null) {
                 if (passwordEncoder.matches(requestMap.get("oldPassword"), userObj.getPassword())) {
                     userObj.setPassword(passwordEncoder.encode(requestMap.get("newPassword")));

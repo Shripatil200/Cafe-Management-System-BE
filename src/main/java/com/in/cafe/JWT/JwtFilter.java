@@ -42,10 +42,22 @@ public class JwtFilter extends OncePerRequestFilter {
             String authorizationHeader = request.getHeader("Authorization");
             String token = null;
 
-            if(authorizationHeader != null && authorizationHeader.startsWith("Bearer")){
+
+
+            if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+
                 token = authorizationHeader.substring(7);
-                userName = jwtUtil.extractUsername(token);
-                claims = jwtUtil.extractAllClaims(token);
+
+                if (token != null && !token.trim().isEmpty()) {
+                    try {
+                        userName = jwtUtil.extractUsername(token);
+                        claims = jwtUtil.extractAllClaims(token);
+                    } catch (Exception e) {
+                        System.out.println("Invalid JWT Token: " + e.getMessage());
+                    }
+
+                }
+
             }
 
             if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -80,4 +92,4 @@ public class JwtFilter extends OncePerRequestFilter {
         return userName;
     }
 }
-//
+
